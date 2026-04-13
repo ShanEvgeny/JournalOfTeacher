@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ScrollView
+        android:id="@+id/list_students"
+        android:layout_width="match_parent"
+        android:layout_height="599dp"
+        android:layout_gravity="center"
+        android:contentDescription="Get created student">
+
+        <LinearLayout
+            android:id="@+id/linearlayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
+    <EditText
+        android:id="@+id/student_full_name"
+        android:layout_width="279dp"
+        android:layout_height="63dp"
+        android:layout_gravity="center_horizontal"
+        android:ems="10"
+        android:gravity="bottom"
+        android:hint="Введите ФИО студента"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/button_create_student"
+        android:layout_width="216dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:text="Добавить нового студента" />
+
+</FrameLayout>
