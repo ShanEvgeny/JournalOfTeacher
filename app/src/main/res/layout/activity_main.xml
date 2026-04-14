@@ -8,34 +8,61 @@
     tools:context=".MainActivity">
 
     <ScrollView
-        android:id="@+id/list_students"
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="599dp"
-        android:layout_gravity="center"
-        android:contentDescription="Get created student">
+        android:layout_gravity="center">
 
         <LinearLayout
             android:id="@+id/linearlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            android:orientation="vertical" >
+
+            <EditText
+                android:id="@+id/editTextStudent"
+                android:layout_width="279dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:ems="10"
+                android:gravity="bottom"
+                android:hint="Введите ФИО студента"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/editTextSubject"
+                android:layout_width="279dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:ems="10"
+                android:gravity="bottom"
+                android:hint="Введите предмет"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/editTextMark"
+                android:layout_width="279dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:ems="10"
+                android:hint="Введите оценку"
+                android:inputType="number" />
+        </LinearLayout>
     </ScrollView>
 
-    <EditText
-        android:id="@+id/student_full_name"
-        android:layout_width="279dp"
-        android:layout_height="63dp"
-        android:layout_gravity="center_horizontal"
-        android:ems="10"
-        android:gravity="bottom"
-        android:hint="Введите ФИО студента"
-        android:inputType="text" />
-
     <Button
-        android:id="@+id/button_create_student"
+        android:id="@+id/buttonAddMark"
         android:layout_width="216dp"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
-        android:text="Добавить нового студента" />
+        android:text="Добавить новую оценку" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" />
 
 </FrameLayout>
