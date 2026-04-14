@@ -48,19 +48,19 @@ class MainActivity : AppCompatActivity() {
             val textViewMarkResult = TextView(this)
             textViewMarkResult.setTextSize(18f)
             textViewMarkResult.setPadding(20, 20, 20, 20)
-            if (editTextStudent.text.isNotEmpty() &&
-                editTextSubject.text.isNotEmpty() &&
-                editTextMark.text.isNotEmpty()
+            if (textStudent.isBlank() ||
+                textSubject.isBlank() ||
+                textMark.isBlank()
                 ){
-                textViewMarkResult.text = "Студент: $textStudent\nПредмет:$textSubject\nОценка:$textMark"
-                linearLayout.addView(textViewMarkResult)
-                editTextStudent.text.clear()
-                editTextSubject.text.clear()
-                editTextMark.text.clear()
-                Toast.makeText(this, "Вы добавили новую оценку!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Некоторые данные не заполнены", Toast.LENGTH_SHORT).show()
+            }
+            else if (textMark.toInt() !in 2..5){
+                Toast.makeText(this, "Некорректное значение оценки", Toast.LENGTH_SHORT).show()
             }
             else {
-                Toast.makeText(this, "Некоторые данные не заполнены", Toast.LENGTH_SHORT).show()
+                textViewMarkResult.text = "Студент: $textStudent\nПредмет: $textSubject\nОценка: $textMark"
+                linearLayout.addView(textViewMarkResult)
+                Toast.makeText(this, "Вы добавили новую оценку!", Toast.LENGTH_SHORT).show()
             }
         }
     }
