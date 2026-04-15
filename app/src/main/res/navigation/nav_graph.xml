@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/fragmentListMarks">
+
+    <fragment
+        android:id="@+id/fragmentListMarks"
+        android:name="com.example.journalofteacher.ListMarksFragment"
+        android:label="Оценки"
+        tools:layout="@layout/fragment_list_marks">
+        <action
+            android:id="@+id/action_to_add_mark"
+            app:destination="@id/fragmentAddMark" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentAddMark"
+        android:name="com.example.journalofteacher.AddMarkFragment"
+        android:label="Добавления оценки"
+        tools:layout="@layout/fragment_add_mark">
+        <action
+            android:id="@+id/action_back_to_list"
+            app:destination="@id/fragmentListMarks"
+            app:popUpTo="@id/fragmentListMarks" />
+    </fragment>
+
+</navigation>
