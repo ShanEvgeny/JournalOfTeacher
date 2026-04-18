@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:layout_margin="8dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textStudent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Студент: " />
+    <TextView
+        android:id="@+id/textSubject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Предмет:" />
+    <TextView
+        android:id="@+id/textDateOfLesson"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Присутствовал на занятии " />
+    <TextView
+        android:id="@+id/textMarkValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Получил оценку " />
+
+</LinearLayout>

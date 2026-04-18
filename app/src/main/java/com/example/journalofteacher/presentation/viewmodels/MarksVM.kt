@@ -1,0 +1,39 @@
+package com.example.journalofteacher.presentation.viewmodels
+
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.example.journalofteacher.domain.entities.Mark
+import java.time.LocalDateTime
+
+class MarksVM: ViewModel() {
+    private val marksMutable = MutableLiveData<MutableList<Mark>>(mutableListOf())
+    val marks: LiveData<MutableList<Mark>> = marksMutable
+    private val lastDateTimeLessonMutable = MutableLiveData<LocalDateTime>()
+    val lastDateTimeLesson: LiveData<LocalDateTime> = lastDateTimeLessonMutable
+    private var lastId = 0
+
+    init {
+        addMark("Иванов И И", "ООП", LocalDateTime.of(2026, 3, 25, 13,45), null)
+        addMark("Петров А А", "ООП", LocalDateTime.of(2026, 3, 25, 13,45), null)
+    }
+
+    fun addMark(student: String, subject: String, dateTimeLesson: LocalDateTime, markValue: Int?){
+        val newMark = Mark(
+            lastId + 1,
+            student,
+            subject,
+            dateTimeLesson,
+            markValue
+        )
+        updateLastDateTimeLesson(dateTimeLesson)
+        val currentList = marksMutable.value
+        currentList?.add(newMark)
+        marksMutable.value = currentList
+    }
+
+    private fun updateLastDateTimeLesson(dateTime: LocalDateTime){
+        if (lastDateTimeLessonMutable.value == null || dateTime.isAfter(lastDateTimeLessonMutable.value))
+            lastDateTimeLessonMutable.value = dateTime
+    }
+}

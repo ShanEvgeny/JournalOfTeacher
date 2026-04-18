@@ -1,17 +1,18 @@
-package com.example.journalofteacher
+package com.example.journalofteacher.presentation
 
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
-import com.google.android.material.navigation.NavigationView
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.journalofteacher.R
+import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout

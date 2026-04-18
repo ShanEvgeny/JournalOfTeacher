@@ -8,12 +8,88 @@
     <TextView
         android:id="@+id/textViewAddMark"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/inputStudent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/inputStudent"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="132dp"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="Введите студента"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/inputMarkValue"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="number"
+        android:hint="Введите оценку"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.449" />
+        app:layout_constraintTop_toBottomOf="@+id/inputDateTimeLesson" />
+
+    <EditText
+        android:id="@+id/inputDateTimeLesson"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="4dp"
+        android:ems="10"
+        android:inputType="datetime"
+        android:hint="Добавить дату"
+        android:focusable="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputSubject" />
+
+    <EditText
+        android:id="@+id/inputSubject"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="4dp"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="Введите предмет"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputStudent" />
+
+    <Button
+        android:id="@+id/buttonAddMark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Добавить отметку в журнал"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputMarkValue"
+        app:layout_constraintVertical_bias="0.255" />
+
+    <Button
+        android:id="@+id/buttonCancelAddMark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Отмена"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonAddMark"
+        app:layout_constraintVertical_bias="0.084" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 

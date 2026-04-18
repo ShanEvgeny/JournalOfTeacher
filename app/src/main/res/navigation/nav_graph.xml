@@ -7,22 +7,25 @@
 
     <fragment
         android:id="@+id/fragmentListMarks"
-        android:name="com.example.journalofteacher.ListMarksFragment"
-        android:label="Оценки"
+        android:name="com.example.journalofteacher.presentation.ListMarksFragment"
+        android:label="Отметки"
         tools:layout="@layout/fragment_list_marks">
         <action
             android:id="@+id/action_to_add_mark"
-            app:destination="@id/fragmentAddMark" />
+            app:destination="@id/fragmentAddMark"
+            app:popUpTo="@id/fragmentListMarks"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/fragmentAddMark"
-        android:name="com.example.journalofteacher.AddMarkFragment"
-        android:label="Добавления оценки"
+        android:name="com.example.journalofteacher.presentation.AddMarkFragment"
+        android:label="Добавления отметки"
         tools:layout="@layout/fragment_add_mark">
         <action
             android:id="@+id/action_back_to_list"
             app:destination="@id/fragmentListMarks"
-            app:popUpTo="@id/fragmentListMarks" />
+            app:popUpTo="@id/fragmentAddMark"
+            app:popUpToInclusive="true"/>
     </fragment>
 
 </navigation>
