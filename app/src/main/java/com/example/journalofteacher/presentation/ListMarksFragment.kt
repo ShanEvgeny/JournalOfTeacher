@@ -42,7 +42,9 @@ class ListMarksFragment: Fragment() {
         val textView = view.findViewById<TextView>(R.id.textViewListMarks)
         buttonToAddMark = view.findViewById(R.id.buttonToAddMark)
         recyclerView = view.findViewById(R.id.recyclerView)
-        adapter = MarkAdapter(emptyList())
+        adapter = MarkAdapter(emptyList()){ mark ->
+            marksVM.deleteMark(mark)
+        }
         recyclerView.layoutManager = GridLayoutManager(
             requireContext(),
             3,

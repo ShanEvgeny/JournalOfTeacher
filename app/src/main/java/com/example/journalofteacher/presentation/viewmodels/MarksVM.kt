@@ -28,7 +28,13 @@ class MarksVM: ViewModel() {
         )
         updateLastDateTimeLesson(dateTimeLesson)
         val currentList = marksMutable.value
-        currentList?.add(newMark)
+        currentList?.add(0,newMark)
+        marksMutable.value = currentList
+    }
+
+    fun deleteMark(mark: Mark){
+        val currentList = marksMutable.value
+        currentList?.remove(mark)
         marksMutable.value = currentList
     }
 

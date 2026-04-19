@@ -2,13 +2,15 @@ package com.example.journalofteacher.presentation.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.constraintlayout.motion.widget.MotionScene
 import androidx.recyclerview.widget.RecyclerView
 import com.example.journalofteacher.databinding.MarkViewBinding
 import com.example.journalofteacher.domain.entities.Mark
 import java.time.format.DateTimeFormatter
 
 class MarkAdapter(
-    private var marks: List<Mark>
+    private var marks: List<Mark>,
+    private val onDeleteClick: (Mark) -> Unit
 ): RecyclerView.Adapter<MarkAdapter.MarkViewHolder>() {
     class MarkViewHolder(val binding: MarkViewBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -27,6 +29,9 @@ class MarkAdapter(
             holder.binding.textMarkValue.text = "Без оценки"
         else
             holder.binding.textMarkValue.text = "Оценка: " + mark.markValue.toString()
+        holder.binding.buttonDeleteMark.setOnClickListener {
+            onDeleteClick(mark)
+        }
     }
 
     override fun getItemCount(): Int = marks.size
