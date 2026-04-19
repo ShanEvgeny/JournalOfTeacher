@@ -3,12 +3,10 @@ package com.example.journalofteacher.presentation
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
-import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -16,8 +14,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.journalofteacher.R
+import com.example.journalofteacher.domain.entities.Mark
 import com.example.journalofteacher.presentation.viewmodels.MarksVM
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
@@ -99,7 +97,7 @@ class AddMarkFragment: Fragment() {
             ).show()
             return
         }
-        else if (markValue !in 2..5) {
+        else if (markValue !in 2..5 && markValue != null) {
             Toast.makeText(
                 requireContext(),
                 "Некорректное значение оценки",

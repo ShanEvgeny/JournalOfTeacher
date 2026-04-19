@@ -10,7 +10,8 @@ import java.time.format.DateTimeFormatter
 
 class MarkAdapter(
     private var marks: List<Mark>,
-    private val onDeleteClick: (Mark) -> Unit
+    private val onDeleteClick: (Mark) -> Unit,
+    private val onEditClick: (Mark) -> Unit
 ): RecyclerView.Adapter<MarkAdapter.MarkViewHolder>() {
     class MarkViewHolder(val binding: MarkViewBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -31,6 +32,10 @@ class MarkAdapter(
             holder.binding.textMarkValue.text = "Оценка: " + mark.markValue.toString()
         holder.binding.buttonDeleteMark.setOnClickListener {
             onDeleteClick(mark)
+        }
+        holder.binding.root.setOnLongClickListener {
+            onEditClick(mark)
+            true
         }
     }
 

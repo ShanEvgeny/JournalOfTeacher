@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="40dp">
+
+    <EditText
+        android:id="@+id/inputStudentEdit"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="@string/input_student_hint" />
+
+    <EditText
+        android:id="@+id/inputSubjectEdit"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="@string/input_subject_hint" />
+
+    <EditText
+        android:id="@+id/inputDateTimeLessonEdit"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:ems="10"
+        android:inputType="datetime"
+        android:focusable="false"
+        android:hint="@string/input_date_time_lesson_hint" />
+
+    <EditText
+        android:id="@+id/inputMarkValueEdit"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:ems="10"
+        android:inputType="number"
+        android:hint="@string/input_mark_value_hint" />
+</LinearLayout>

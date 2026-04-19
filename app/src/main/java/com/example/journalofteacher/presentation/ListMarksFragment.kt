@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.journalofteacher.R
+import com.example.journalofteacher.domain.entities.Mark
 import com.example.journalofteacher.presentation.adapters.MarkAdapter
 import com.example.journalofteacher.presentation.viewmodels.MarksVM
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -42,9 +43,11 @@ class ListMarksFragment: Fragment() {
         val textView = view.findViewById<TextView>(R.id.textViewListMarks)
         buttonToAddMark = view.findViewById(R.id.buttonToAddMark)
         recyclerView = view.findViewById(R.id.recyclerView)
-        adapter = MarkAdapter(emptyList()){ mark ->
-            marksVM.deleteMark(mark)
-        }
+        adapter = MarkAdapter(
+            emptyList(),
+            onDeleteClick = { mark -> marksVM.deleteMark(mark) },
+            onEditClick = {mark -> showMarkEditDialog(mark)}
+        )
         recyclerView.layoutManager = GridLayoutManager(
             requireContext(),
             3,
@@ -67,5 +70,11 @@ class ListMarksFragment: Fragment() {
             findNavController().navigate(R.id.action_to_add_mark)
         }
 
+    }
+
+    fun showMarkEditDialog(newEditMark: Mark){
+        val dialog = EditMarkDialog()
+        marksVM.changeEditMark(newEditMark)
+        dialog.show(parentFragmentManager, "EditMarkDialog")
     }
 }

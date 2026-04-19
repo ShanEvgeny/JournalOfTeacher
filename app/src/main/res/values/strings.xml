@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">JournalOfTeacher</string>
+    <string name="input_student_hint">Введите студента</string>
+    <string name="input_subject_hint">Введите предмет</string>
+    <string name="input_date_time_lesson_hint">Добавить дату</string>
+    <string name="input_mark_value_hint">Введите оценку</string>
 </resources>
