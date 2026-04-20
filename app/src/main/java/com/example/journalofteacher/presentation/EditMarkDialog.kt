@@ -29,7 +29,7 @@ class EditMarkDialog: DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(requireContext())
-        val inflater = LayoutInflater.from(context)
+        val inflater = LayoutInflater.from(requireContext())
         val view = inflater.inflate(R.layout.dialog_edit_mark, null)
         inputStudentEdit = view.findViewById(R.id.inputStudentEdit)
         inputSubjectEdit = view.findViewById(R.id.inputSubjectEdit)

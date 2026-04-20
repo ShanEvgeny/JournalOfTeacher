@@ -1,12 +1,14 @@
 package com.example.journalofteacher.presentation
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
@@ -26,7 +28,6 @@ class ListMarksFragment: Fragment() {
     private val marksVM: MarksVM by activityViewModels()
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: MarkAdapter
-
     private lateinit var buttonToAddMark: FloatingActionButton
 
     override fun onCreateView(
@@ -45,7 +46,7 @@ class ListMarksFragment: Fragment() {
         recyclerView = view.findViewById(R.id.recyclerView)
         adapter = MarkAdapter(
             emptyList(),
-            onDeleteClick = { mark -> marksVM.deleteMark(mark) },
+            onDeleteClick = { mark -> showMarkDeleteDialog(mark) },
             onEditClick = {mark -> showMarkEditDialog(mark)}
         )
         recyclerView.layoutManager = GridLayoutManager(
@@ -70,6 +71,19 @@ class ListMarksFragment: Fragment() {
             findNavController().navigate(R.id.action_to_add_mark)
         }
 
+    }
+
+    fun showMarkDeleteDialog(mark: Mark){
+        AlertDialog.Builder(requireContext())
+            .setTitle("Удаление отметки")
+            .setMessage("Вы уверены, что хотите удалить эту отметку?")
+            .setPositiveButton("Удалить") { _, _ ->
+                marksVM.deleteMark(mark)
+            }
+            .setNegativeButton("Отмена"){ dialog , _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
     fun showMarkEditDialog(newEditMark: Mark){
