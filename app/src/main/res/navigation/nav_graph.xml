@@ -27,5 +27,11 @@
             app:popUpTo="@id/fragmentAddMark"
             app:popUpToInclusive="true"/>
     </fragment>
+    <fragment
+        android:id="@+id/fragmentListGroups"
+        android:name="com.example.journalofteacher.presentation.ListGroupsFragment"
+        android:label="Группы"
+        tools:layout="@layout/fragment_list_groups">
+    </fragment>
 
 </navigation>
