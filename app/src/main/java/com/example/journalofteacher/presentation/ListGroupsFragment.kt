@@ -43,7 +43,7 @@ class ListGroupsFragment: Fragment() {
         adapter = GroupAdapter(
             emptyList(),
             onDeleteClick = { group -> showGroupDeleteDialog(group.id) },
-            onEditClick = {group -> showGroupEditDialog(group.id)}
+            onEditClick = { group -> showGroupEditDialog(group.id) }
         )
         recyclerView.layoutManager = GridLayoutManager(
             requireContext(),
@@ -57,7 +57,7 @@ class ListGroupsFragment: Fragment() {
             adapter.updateItems(groups)
         }
         groupVM.errorMessage.observe(viewLifecycleOwner) { errorMessage ->
-            if (errorMessage.isNotEmpty())
+            if (errorMessage != null)
                 Toast.makeText(
                     requireContext(),
                     errorMessage,

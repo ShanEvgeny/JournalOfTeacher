@@ -1,4 +1,4 @@
-package com.example.journalofteacher.domain.usecases
+package com.example.journalofteacher.domain.usecases.group
 
 import com.example.journalofteacher.domain.entities.Group
 import com.example.journalofteacher.domain.entities.GroupParam

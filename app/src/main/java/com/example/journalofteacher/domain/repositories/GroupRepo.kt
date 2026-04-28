@@ -6,7 +6,7 @@ import com.example.journalofteacher.domain.entities.GroupParam
 interface GroupRepo {
     fun create(param: GroupParam): Group
 
-    fun update(param: GroupParam, groupId: Int): Group
+    fun update(group: Group): Group
 
     fun delete(groupId: Int)
 

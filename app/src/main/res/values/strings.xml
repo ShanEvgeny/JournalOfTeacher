@@ -5,4 +5,5 @@
     <string name="input_date_time_lesson_hint">Добавить дату</string>
     <string name="input_mark_value_hint">Введите оценку</string>
     <string name="input_group_title_hint">Введите название группы</string>
+    <string name="input_student_full_name_hint">Введите полное имя студента</string>
 </resources>

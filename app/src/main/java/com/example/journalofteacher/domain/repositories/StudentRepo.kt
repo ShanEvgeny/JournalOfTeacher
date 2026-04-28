@@ -1,17 +1,16 @@
 package com.example.journalofteacher.domain.repositories
 
 import com.example.journalofteacher.domain.entities.Student
+import com.example.journalofteacher.domain.entities.StudentParam
 
 interface StudentRepo {
-    fun create(student: Student): Student
+    fun create(param: StudentParam): Student
 
     fun update(student: Student): Student
 
-    fun delete(studentId: Int): Boolean
-
-    fun getAllByGroup(groupId: Int): List<Student>
+    fun delete(studentId: Int)
 
     fun getAll(): List<Student>
 
-    fun getById(studentId: Int): Student
+    fun getById(studentId: Int): Student?
 }

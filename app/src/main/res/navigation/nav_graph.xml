@@ -33,5 +33,11 @@
         android:label="Группы"
         tools:layout="@layout/fragment_list_groups">
     </fragment>
+    <fragment
+        android:id="@+id/fragmentListStudents"
+        android:name="com.example.journalofteacher.presentation.ListStudentsFragment"
+        android:label="Студенты"
+        tools:layout="@layout/fragment_list_students">
+    </fragment>
 
 </navigation>

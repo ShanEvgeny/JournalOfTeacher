@@ -38,11 +38,11 @@ class GroupDialog: DialogFragment() {
             builder.setTitle("Добавление группы")
         }
         val dialog = builder.create()
+        dialog.setCanceledOnTouchOutside(false)
         dialog.setOnShowListener {
             val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
             positiveButton.setOnClickListener {
                 saveGroup()
-                dismiss()
             }
         }
 
@@ -57,8 +57,11 @@ class GroupDialog: DialogFragment() {
         }
         else
             groupVM.addGroup(groupTitle)
-        if (groupVM.errorMessage.value == null)
-            dismiss()
+        if (groupVM.errorMessage.value != null){
+            groupVM.clearErrorMessage()
+            return
+        }
+        dismiss()
     }
 
     fun fetchGroupToEditData(){

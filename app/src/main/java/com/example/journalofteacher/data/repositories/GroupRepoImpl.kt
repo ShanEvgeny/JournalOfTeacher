@@ -10,11 +10,8 @@ class GroupRepoImpl(private val groupStorage: GroupStorage): GroupRepo {
         return groupStorage.create(param)
     }
 
-    override fun update(
-        param: GroupParam,
-        groupId: Int
-    ): Group {
-        return groupStorage.update(param, groupId)
+    override fun update(group: Group): Group {
+        return groupStorage.update(group)
     }
 
     override fun delete(groupId: Int) {

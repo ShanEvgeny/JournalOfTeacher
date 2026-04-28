@@ -1,14 +1,13 @@
-package com.example.journalofteacher.domain.usecases
+package com.example.journalofteacher.domain.usecases.group
 
-import android.content.res.Resources
 import com.example.journalofteacher.domain.entities.Group
 import com.example.journalofteacher.domain.entities.GroupParam
 import com.example.journalofteacher.domain.repositories.GroupRepo
 
 class UpdateGroupUseCase(private val groupRepo: GroupRepo) {
-    fun execute(param: GroupParam, groupId: Int): Group {
-        if (groupRepo.getById(groupId) == null)
+    fun execute(group: Group): Group {
+        if (groupRepo.getById(group.id) == null)
             throw IllegalArgumentException()
-        return groupRepo.update(param, groupId)
+        return groupRepo.update(group)
     }
 }

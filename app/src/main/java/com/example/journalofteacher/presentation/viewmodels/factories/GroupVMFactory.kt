@@ -5,11 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.journalofteacher.data.repositories.GroupRepoImpl
 import com.example.journalofteacher.data.storages.GroupStorage
-import com.example.journalofteacher.domain.usecases.CreateGroupUseCase
-import com.example.journalofteacher.domain.usecases.DeleteGroupUseCase
-import com.example.journalofteacher.domain.usecases.GetAllGroupsUseCase
-import com.example.journalofteacher.domain.usecases.GetGroupByIdUseCase
-import com.example.journalofteacher.domain.usecases.UpdateGroupUseCase
+import com.example.journalofteacher.domain.usecases.group.CreateGroupUseCase
+import com.example.journalofteacher.domain.usecases.group.DeleteGroupUseCase
+import com.example.journalofteacher.domain.usecases.group.GetAllGroupsUseCase
+import com.example.journalofteacher.domain.usecases.group.GetGroupByIdUseCase
+import com.example.journalofteacher.domain.usecases.group.UpdateGroupUseCase
 import com.example.journalofteacher.presentation.viewmodels.GroupVM
 
 class GroupVMFactory(context: Context): ViewModelProvider.Factory {

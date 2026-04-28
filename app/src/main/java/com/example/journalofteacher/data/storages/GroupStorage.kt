@@ -37,20 +37,19 @@ class GroupStorage(context: Context) {
         return newGroup
     }
 
-    fun update(param: GroupParam, groupId: Int): Group{
+    fun update(group: Group): Group{
         val db = openWritable()
         val values = ContentValues().apply {
-            put("title", param.title)
+            put("title", group.title)
         }
         val groupId = db.update(
             "study_groups",
             values,
             "id = ?",
-            arrayOf(groupId.toString())
+            arrayOf(group.id.toString())
         )
-        val updatedGroup = Group(groupId, param.title)
         close()
-        return updatedGroup
+        return group
     }
 
     fun delete(groupId: Int){
