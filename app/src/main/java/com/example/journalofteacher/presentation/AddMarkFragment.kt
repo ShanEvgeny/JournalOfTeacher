@@ -6,8 +6,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -23,13 +26,13 @@ import kotlin.getValue
 
 class AddMarkFragment: Fragment() {
     private val marksVM: MarksVM by activityViewModels()
-    private lateinit var inputStudent: EditText
+    private lateinit var selectorStudents: Spinner
     private lateinit var inputSubject: EditText
     private lateinit var inputDateTimeLesson: EditText
     private lateinit var inputMarkValue: EditText
     private lateinit var buttonAddMark: Button
     private lateinit var buttonCancelAddMark: Button
-    private lateinit var selectedDateTime: LocalDateTime
+    private lateinit var selectedDataTime: LocalDateTime
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,14 +45,15 @@ class AddMarkFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val textView = view.findViewById<TextView>(R.id.textViewAddMark)
-        inputStudent = view.findViewById(R.id.inputStudent)
+        selectorStudents = view.findViewById(R.id.selectorStudents)
         inputSubject = view.findViewById(R.id.inputSubject)
         inputDateTimeLesson = view.findViewById(R.id.inputDateTimeLesson)
         inputMarkValue = view.findViewById(R.id.inputMarkValue)
         buttonAddMark = view.findViewById(R.id.buttonAddMark)
         buttonCancelAddMark = view.findViewById(R.id.buttonCancelAddMark)
         textView.text = "Это фрагмент для добавления оценки"
-        fetchLastDateTimeLesson()
+        updateInputDateTimeLesson(marksVM.lastDateTimeLesson.value)
+        setupSelectorGroups()
         buttonAddMark.setOnClickListener {
             addMark()
         }
@@ -57,67 +61,94 @@ class AddMarkFragment: Fragment() {
             findNavController().navigate(R.id.action_back_to_list)
         }
         inputDateTimeLesson.setOnClickListener {
-            val calendar = Calendar.getInstance()
-            val year = calendar.get(Calendar.YEAR)
-            val month = calendar.get(Calendar.MONTH)
-            val day = calendar.get(Calendar.DAY_OF_MONTH)
-            val hourOfDay = calendar.get(Calendar.HOUR_OF_DAY)
-            val minute = calendar.get(Calendar.MINUTE)
-
-            val datePickerDialog = DatePickerDialog(
-                requireContext(),
-                { _, year, month, day ->
-                    TimePickerDialog(
-                        requireContext(),
-                        {_, hourOfDay, minute ->
-                            selectedDateTime = LocalDateTime.of(year, month + 1, day, hourOfDay, minute)
-                            updateInputDateTimeLesson(selectedDateTime)
-                        },
-                        hourOfDay, minute, true
-                    ).show()
-                },
-                year, month, day
-            )
-            datePickerDialog.show()
+            showDateDialog()
         }
+        marksVM.lastDateTimeLesson.observe(viewLifecycleOwner) { dateTime ->
+            updateInputDateTimeLesson(dateTime)
+        }
+        marksVM.errorMessage.observe(viewLifecycleOwner) { errorMessage ->
+            if (errorMessage != null){
+                Toast.makeText(
+                    requireContext(),
+                    errorMessage,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        marksVM.fetchStudents()
+        marksVM.fetchLastDateTimeLesson()
+        setupSelectorGroups()
+    }
+
+    private fun setupSelectorGroups() {
+        val adapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            marksVM.students.value.map { it.fullName }
+        )
+        if (marksVM.students.value.isEmpty()){
+            selectorStudents.isEnabled = false
+            return
+        }
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        selectorStudents.setAdapter(adapter)
+        selectorStudents.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                marksVM.selectStudent(marksVM.students.value[position].id)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+
+    }
+
+    private fun showDateDialog(){
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+        val hourOfDay = calendar.get(Calendar.HOUR_OF_DAY)
+        val minute = calendar.get(Calendar.MINUTE)
+
+        val datePickerDialog = DatePickerDialog(
+            requireContext(),
+            { _, year, month, day ->
+                TimePickerDialog(
+                    requireContext(),
+                    {_, hourOfDay, minute ->
+                        updateInputDateTimeLesson(
+                            LocalDateTime.of(year, month + 1, day, hourOfDay, minute)
+                        )
+                    },
+                    hourOfDay, minute, true
+                ).show()
+            },
+            year, month, day
+        )
+        datePickerDialog.show()
     }
 
     private fun addMark(){
-        val student = inputStudent.text.toString()
         val subject = inputSubject.text.toString()
-        val dateTimeLesson = selectedDateTime
+        val dateTimeLesson = selectedDataTime
         val markValue = inputMarkValue.text.toString().toIntOrNull()
-        if (inputStudent.text.isBlank() ||
-            inputSubject.text.isBlank() ||
-            inputDateTimeLesson.text.isBlank()) {
-            Toast.makeText(
-                requireContext(),
-                "Некоторые данные не заполнены",
-                Toast.LENGTH_SHORT
-            ).show()
+        marksVM.addMark(subject, dateTimeLesson, markValue)
+        if (marksVM.errorMessage.value != null) {
+            marksVM.clearErrorMessage()
             return
         }
-        else if (markValue !in 2..5 && markValue != null) {
-            Toast.makeText(
-                requireContext(),
-                "Некорректное значение оценки",
-                Toast.LENGTH_SHORT
-            ).show()
-            return
-        }
-        marksVM.addMark(student, subject, dateTimeLesson, markValue)
+        marksVM.clearSelectedStudent()
         findNavController().navigate(R.id.action_back_to_list)
+
     }
 
-    private fun fetchLastDateTimeLesson(){
-        marksVM.lastDateTimeLesson.value?.let { dateTime ->
-            selectedDateTime = dateTime
-            updateInputDateTimeLesson(selectedDateTime)
-        }
-    }
-
-    private fun updateInputDateTimeLesson(dateTime: LocalDateTime){
+    private fun updateInputDateTimeLesson(dateTime: LocalDateTime?){
+        selectedDataTime = dateTime ?: LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")
-        inputDateTimeLesson.setText(dateTime.format(formatter))
+        inputDateTimeLesson.setText(selectedDataTime.format(formatter))
     }
 }

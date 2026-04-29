@@ -6,10 +6,12 @@ import androidx.constraintlayout.motion.widget.MotionScene
 import androidx.recyclerview.widget.RecyclerView
 import com.example.journalofteacher.databinding.MarkViewBinding
 import com.example.journalofteacher.domain.entities.Mark
+import com.example.journalofteacher.domain.entities.Student
 import java.time.format.DateTimeFormatter
 
 class MarkAdapter(
     private var marks: List<Mark>,
+    private var students: List<Student>?,
     private val onDeleteClick: (Mark) -> Unit,
     private val onEditClick: (Mark) -> Unit
 ): RecyclerView.Adapter<MarkAdapter.MarkViewHolder>() {
@@ -23,7 +25,7 @@ class MarkAdapter(
     override fun onBindViewHolder(holder: MarkViewHolder, position: Int) {
         val mark = marks[position]
         val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")
-        holder.binding.textStudent.text = "Студент: " + mark.student
+        holder.binding.textStudent.text = "Студент: " + getStudentInfo(mark.studentId)
         holder.binding.textSubject.text = "Предмет: " + mark.subject
         holder.binding.textDateOfLesson.text = "Был на занятии:\n" + mark.dateTimeLesson.format(formatter)
         if (mark.markValue == null)
@@ -44,5 +46,14 @@ class MarkAdapter(
     fun updateItems(updatedMarks: List<Mark>) {
         marks = updatedMarks
         notifyDataSetChanged()
+    }
+
+    fun updateStudents(updatedStudents: List<Student>) {
+        students = updatedStudents
+        notifyDataSetChanged()
+    }
+
+    private fun getStudentInfo(studentId: Int): String {
+        return students?.find { it.id == studentId }?.fullName ?: "Неизвестный студент"
     }
 }

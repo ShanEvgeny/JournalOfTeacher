@@ -9,7 +9,6 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Spinner
-import androidx.core.view.isEmpty
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import com.example.journalofteacher.R

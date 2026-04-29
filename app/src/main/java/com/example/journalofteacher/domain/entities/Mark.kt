@@ -3,8 +3,8 @@ package com.example.journalofteacher.domain.entities
 import java.time.LocalDateTime
 
 data class Mark(
-    var id: Int,
-    val student: String,
+    val id: Int,
+    val studentId: Int,
     val subject: String,
     val dateTimeLesson: LocalDateTime,
     val markValue: Int?

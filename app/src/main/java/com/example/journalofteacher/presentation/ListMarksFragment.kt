@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -17,11 +18,14 @@ import com.example.journalofteacher.R
 import com.example.journalofteacher.domain.entities.Mark
 import com.example.journalofteacher.presentation.adapters.MarkAdapter
 import com.example.journalofteacher.presentation.viewmodels.MarksVM
+import com.example.journalofteacher.presentation.viewmodels.factories.MarkVMFactory
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.time.format.DateTimeFormatter
 
 class ListMarksFragment: Fragment() {
-    private val marksVM: MarksVM by activityViewModels()
+    private val marksVM: MarksVM by activityViewModels(){
+        MarkVMFactory(requireContext())
+    }
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: MarkAdapter
     private lateinit var buttonToAddMark: FloatingActionButton
@@ -42,8 +46,9 @@ class ListMarksFragment: Fragment() {
         recyclerView = view.findViewById(R.id.recyclerView)
         adapter = MarkAdapter(
             emptyList(),
-            onDeleteClick = { mark -> showMarkDeleteDialog(mark) },
-            onEditClick = {mark -> showMarkEditDialog(mark)}
+            marksVM.students.value,
+            onDeleteClick = { mark -> showMarkDeleteDialog(mark.id) },
+            onEditClick = {mark -> showMarkEditDialog(mark.id)}
         )
         recyclerView.layoutManager = GridLayoutManager(
             requireContext(),
@@ -52,28 +57,46 @@ class ListMarksFragment: Fragment() {
             false
         )
         recyclerView.adapter = adapter
-        if (marksVM.lastDateTimeLesson.value != null) {
-            val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")
-            textView.text = "Последнее сохраненное время пары:\n${
-                marksVM.lastDateTimeLesson.value?.format(formatter)
-            }"
-        }
-        else
-            textView.text = "Пока пусто( отметки не добавляли"
+        textView.text = "Пока пусто( отметок не добавляли"
         marksVM.marks.observe(viewLifecycleOwner) { marks ->
             adapter.updateItems(marks)
+        }
+        marksVM.students.observe(viewLifecycleOwner){ students ->
+            adapter.updateStudents(students)
+        }
+        marksVM.lastDateTimeLesson.observe(viewLifecycleOwner){ datetime ->
+            if (datetime != null){
+                val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")
+                textView.text = "Последнее сохраненное время пары:\n${
+                    datetime.format(formatter)
+                }"
+            }
+        }
+        marksVM.errorMessage.observe(viewLifecycleOwner) { errorMessage ->
+            if (errorMessage != null){
+                Toast.makeText(
+                    requireContext(),
+                    errorMessage,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
         buttonToAddMark.setOnClickListener {
             findNavController().navigate(R.id.action_to_add_mark)
         }
     }
 
-    fun showMarkDeleteDialog(mark: Mark){
+    override fun onStart() {
+        super.onStart()
+        marksVM.fetchStudents()
+    }
+
+    fun showMarkDeleteDialog(markId: Int){
         AlertDialog.Builder(requireContext())
             .setTitle("Удаление отметки")
             .setMessage("Вы уверены, что хотите удалить эту отметку?")
             .setPositiveButton("Удалить") { _, _ ->
-                marksVM.deleteMark(mark)
+                marksVM.deleteMark(markId)
             }
             .setNegativeButton("Отмена"){ dialog , _ ->
                 dialog.dismiss()
@@ -81,9 +104,9 @@ class ListMarksFragment: Fragment() {
             .show()
     }
 
-    fun showMarkEditDialog(newEditMark: Mark){
+    fun showMarkEditDialog(markId: Int){
         val dialog = EditMarkDialog()
-        marksVM.changeEditMark(newEditMark)
+        marksVM.changeMarkToEdit(markId)
         dialog.show(parentFragmentManager, "EditMarkDialog")
     }
 }
